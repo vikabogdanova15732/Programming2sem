@@ -55,9 +55,13 @@ public:
     }
     void sumOrSub(const DynamicArray& arr2) {
         for (int i = 0; i < razmer; i++) {
+            int element = 0;
+
             if (i < arr2.razmer) {
-                nachalo[i] += arr2.nachalo[i];
+                element = arr2.nachalo[i];
             }
+
+            nachalo[i] += element;
         }
     }
 };
