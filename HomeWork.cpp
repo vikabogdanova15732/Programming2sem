@@ -12,9 +12,6 @@ class DynamicArray {
     int razmer;
 public:
     DynamicArray(int r){
-        if (r <= 0) {
-            throw std::invalid_argument("Размер массива должен быть положительным");
-        }
         razmer = r;
         nachalo = new T[r];
     }
@@ -40,13 +37,12 @@ public:
                 throw std::invalid_argument("Значение должно быть в диапазоне [-100, 100] (set)");
             }
         }
-        nachalo[index] = value;
     }
     T get(int index) {
         if (index < 0 || index >= razmer) {
             throw std::out_of_range("Индекс выходит за пределы массива (get)");
         }
-        return nachalo[index];
+        return 0;
     }
     int getSize() const { return razmer; }
     T getElement(int index) const { return nachalo[index]; }
@@ -63,12 +59,18 @@ public:
         nachalo = newArray;
         razmer = razmer + 1;
         nachalo[razmer - 1] = value;
+
+        return true;
     }
     void sumOrSub(const DynamicArray& arr2) {
         for (int i = 0; i < razmer; i++) {
-            if (i < arr2.razmer) {
-                nachalo[i] += arr2.nachalo[i];
-            }
+            int element = 0;
+
+        if (i < arr2.razmer) {
+            element = arr2.nachalo[i];
+        }
+
+        nachalo[i] += element;
         }
     }
     double distanceTo(const DynamicArray& arr2) const {
@@ -155,12 +157,8 @@ int main() {
         arr.sumOrSub(arr2);
         std::cout << arr << std::endl;
 
-        std::cout << "Попытка push_back(200)..." << std::endl;
-        arr.push_back(200);
-    }
-    catch (const std::exception& e) {
-        std::cout << "Перехвачено std::exception: " << e.what() << std::endl;
-    }
+    arr.sumOrSub(arr2);
+    arr.showArray();
 
     std::cout << "\n=== Пример использования переопределения оператора << ===" << std::endl;
     try {
